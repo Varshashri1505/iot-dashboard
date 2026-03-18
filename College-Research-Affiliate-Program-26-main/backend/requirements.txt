@@ -5,6 +5,6 @@ uvicorn
 pydantic
 python-dotenv
 
-tensorflow==2.13.0
+tensorflow==2.15.0
 numpy==1.24.3
 h5py==3.8.0
