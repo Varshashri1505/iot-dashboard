@@ -1,6 +1,4 @@
 import os
-os.environ["TF_USE_LEGACY_KERAS"] = "1"
-import os
 from dotenv import load_dotenv
 import requests
 import psycopg2
@@ -419,12 +417,6 @@ async def get_predictions_history(limit: int = 100):
 
     return result
 
-
-# ==============================
-# MAIN
-# ==============================
-app = FastAPI()
-
 # ==============================
 # START BACKGROUND COLLECTOR
 # ==============================
@@ -437,5 +429,9 @@ def start_background_tasks():
     thread.daemon = True
     thread.start()
 
+if __name__ == "__main__":
+    # Pull the port from Render's environment, default to 8000 for local testing
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
 
 
