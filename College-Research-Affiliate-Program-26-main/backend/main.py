@@ -378,16 +378,13 @@ async def get_predictions_history(limit: int = 100):
 # ==============================
 # START BACKGROUND COLLECTOR
 # ==============================
+
+ml_model = load_model("saved_models/fixed_model.h5", compile=False)
+
 @app.on_event("startup")
 def start_background_tasks():
     global ml_model
-
     create_tables()
-
-    # 🔥 LOAD MODEL HERE
-    ml_model = load_model("saved_models/fixed_model.h5", compile=False)
-
-    print("✅ Model Loaded Successfully")
 
     thread = threading.Thread(target=sensor_collector)
     thread.daemon = True
