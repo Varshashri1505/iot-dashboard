@@ -1,4 +1,6 @@
 import os
+os.environ["TF_USE_LEGACY_KERAS"] = "1"
+import os
 from dotenv import load_dotenv
 import requests
 import psycopg2
@@ -10,6 +12,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 import numpy as np
 
