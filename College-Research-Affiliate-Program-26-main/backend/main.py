@@ -34,20 +34,8 @@ app.add_middleware(
 # DATABASE CONNECTION
 # ==============================
 
-
 def get_connection():
-    """
-    Get database connection using environment variables.
-    Falls back to local development settings if env vars not set.
-    """
-    return psycopg2.connect(
-        host=os.environ.get("DB_HOST", "localhost"),
-        port=os.environ.get("DB_PORT", "5432"),
-        database=os.environ.get("DB_NAME", "iot-test"),
-        user=os.environ.get("DB_USER", "postgres"),
-        password=os.environ.get("DB_PASSWORD", "postgres"),
-        sslmode=os.environ.get("DB_SSLMODE", "prefer")  # Use "require" for Aiven
-    )
+    return psycopg2.connect(os.environ["postgresql://iot_db_5212_user:HSHsC0J1ggGoiK3ay7vhiYFI6HTAT53U@dpg-d6t7fo7afjfc73fc2h3g-a/iot_db_5212"])
 
 
 # ==============================
