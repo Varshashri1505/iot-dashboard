@@ -1,6 +1,4 @@
 import os
-os.environ["TF_USE_LEGACY_KERAS"] = "1"
-import os
 from dotenv import load_dotenv
 import requests
 import psycopg2
