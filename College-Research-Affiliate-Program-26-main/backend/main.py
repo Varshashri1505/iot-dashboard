@@ -417,6 +417,12 @@ async def get_predictions_history(limit: int = 100):
 
     return result
 
+
+# ==============================
+# MAIN
+# ==============================
+app = FastAPI()
+
 # ==============================
 # START BACKGROUND COLLECTOR
 # ==============================
@@ -430,8 +436,4 @@ def start_background_tasks():
     thread.start()
 
 
-# ==============================
-# MAIN
-# ==============================
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+
