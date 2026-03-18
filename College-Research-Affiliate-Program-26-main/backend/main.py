@@ -13,7 +13,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
 import tensorflow as tf
-from tensorflow.keras.models import load_model
+# This is the most reliable way to import load_model in TF 2.15+
+from tensorflow.keras.models import load_model 
 import numpy as np
 
 # Load environment variables from .env file
@@ -21,7 +22,7 @@ load_dotenv()
 
 app = FastAPI()
 # Load ML model
-ml_model = load_model("saved_models/LSTM_model.h5")
+ml_model = None
 
 # Added CORS middleware
 app.add_middleware(
@@ -276,37 +277,6 @@ def get_tank_parameters():
 # GET SENSOR DATA API
 # ==============================
 @app.get("/sensor-data")
-def get_sensor_data():
-
-    conn = get_connection()
-    cur = conn.cursor()
-
-    cur.execute("""
-    SELECT id,node_id,field1,field2,created_at
-    FROM sensor_data
-    ORDER BY id DESC
-    LIMIT 100
-    """)
-
-    rows = cur.fetchall()
-
-    cur.close()
-    conn.close()
-
-    result = []
-
-    for row in rows:
-        result.append({
-            "id": row[0],
-            "node_id": row[1],
-            "distance": row[2],
-            "temperature": row[3],
-            "created_at": row[4]
-        })
-
-    return result
-
-@app.get("/sensor-data")
 def get_sensor_data(node_id: str = None):
 
     conn = get_connection()
@@ -425,13 +395,20 @@ async def get_predictions_history(limit: int = 100):
 # ==============================
 @app.on_event("startup")
 def start_background_tasks():
+    global ml_model
 
     create_tables()
+
+    # 🔥 LOAD MODEL HERE
+    ml_model = load_model("saved_models/LSTM_model.h5", compile=False)
+
+    print("✅ Model Loaded Successfully")
 
     thread = threading.Thread(target=sensor_collector)
     thread.daemon = True
     thread.start()
 
+# app
 if __name__ == "__main__":
     # Pull the port from Render's environment, default to 8000 for local testing
     port = int(os.environ.get("PORT", 8000))
