@@ -13,8 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
 import tensorflow as tf
-# This is the most reliable way to import load_model in TF 2.15+
-from tensorflow.keras.models import load_model 
+load_model = tf.keras.models.load_model 
 import numpy as np
 
 # Load environment variables from .env file
