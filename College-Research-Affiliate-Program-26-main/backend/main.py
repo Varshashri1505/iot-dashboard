@@ -1,7 +1,6 @@
 import os
 os.environ["TF_USE_LEGACY_KERAS"] = "1"
-import tensorflow as tf
-
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 import os
 from dotenv import load_dotenv
