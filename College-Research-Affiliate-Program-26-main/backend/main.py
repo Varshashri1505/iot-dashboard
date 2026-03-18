@@ -1,6 +1,23 @@
 import os
-os.environ["TF_USE_LEGACY_KERAS"] = "1"
+from tensorflow.keras.models import load_model
+
+# 1. Hide the hardware message and fix the Keras version
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+os.environ["TF_USE_LEGACY_KERAS"] = "1"
+
+# 2. Find the absolute path to your model
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Change 'ml_models' to 'backend' if that's the one you want
+MODEL_PATH = os.path.join(BASE_DIR, "ml_models", "fixed_model.h5")
+
+# 3. Load with a check to prevent crashing
+if os.path.exists(MODEL_PATH):
+    model = load_model(MODEL_PATH)
+    print(f"✅ Model loaded successfully from {MODEL_PATH}")
+else:
+    print(f"❌ ERROR: Model not found at {MODEL_PATH}")
+    # This print will show up in your Render logs so you can see the real path
+
 
 import os
 from dotenv import load_dotenv
