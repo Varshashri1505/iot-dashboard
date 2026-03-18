@@ -400,7 +400,7 @@ def start_background_tasks():
     create_tables()
 
     # 🔥 LOAD MODEL HERE
-    ml_model = load_model("saved_models/LSTM_model.h5", compile=False)
+    ml_model = load_model("saved_models/fixed_model.h5", compile=False)
 
     print("✅ Model Loaded Successfully")
 
