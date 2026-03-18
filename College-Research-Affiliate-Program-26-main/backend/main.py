@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import numpy as np
 
 # Load environment variables from .env file
@@ -18,7 +18,7 @@ load_dotenv()
 
 app = FastAPI()
 # Load ML model
-ml_model = load_model("saved_models/LSTM_model.h5", compile=False)
+ml_model = load_model("saved_models/LSTM_model.h5")
 
 # Added CORS middleware
 app.add_middleware(
