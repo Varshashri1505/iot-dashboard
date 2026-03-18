@@ -35,7 +35,7 @@ app.add_middleware(
 # ==============================
 
 def get_connection():
-    return psycopg2.connect(os.environ["postgresql://iot_db_5212_user:HSHsC0J1ggGoiK3ay7vhiYFI6HTAT53U@dpg-d6t7fo7afjfc73fc2h3g-a/iot_db_5212"])
+    return psycopg2.connect(os.environ["DATABASE_URL"])
 
 
 # ==============================
