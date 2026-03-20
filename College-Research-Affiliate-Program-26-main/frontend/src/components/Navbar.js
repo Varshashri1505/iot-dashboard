@@ -18,7 +18,21 @@ const Navbar = ({ onToggleSidebar }) => {
       <div className="navbar-center">
         <h1 className="navbar-title">IOT Dashboard</h1>
       </div>
-      
+      <div className="navbar-right">
+        <button 
+          onClick={() => {
+            document.body.classList.toggle("dark");
+          }}
+          style={{
+            padding: "6px 10px",
+            borderRadius: "6px",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
+          🌙
+        </button>
+      </div>
       {/* <div className="navbar-right">
         <div className="notification-icon">
           <svg 

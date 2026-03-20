@@ -1041,3 +1041,22 @@ body {
     gap: 15px;
   }
 }
+
+/* Dark mode styles */
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark .card {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+body.dark .navbar {
+  background-color: #0d1b2a;
+}
+
+body.dark .sidebar {
+  background-color: #1b263b;
+}
