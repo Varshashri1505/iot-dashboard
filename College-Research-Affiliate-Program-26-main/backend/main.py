@@ -10,16 +10,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
-import tensorflow as tf
-load_model = tf.keras.models.load_model 
-import numpy as np
+
 
 # Load environment variables from .env file
 load_dotenv()
 
 app = FastAPI()
-# Load ML model
-ml_model = None
+
 
 # Added CORS middleware
 app.add_middleware(
@@ -308,6 +305,14 @@ def get_sensor_data(node_id: str = None):
         })
 
     return result
+
+from tensorflow.keras.models import load_model
+import numpy as np
+
+# Load ML model at startup
+ml_model = load_model("saved_models/LSTM_model.h5")
+
+labels = ["no_activity","shower","faucet","toilet","dishwasher"]
 #Prediction API
 @app.post("/api/v1/predict")
 async def predict_water_activity(data: dict):
@@ -389,11 +394,9 @@ async def get_predictions_history(limit: int = 100):
 # START BACKGROUND COLLECTOR
 # ==============================
 
-ml_model = load_model("saved_models/LSTM_model.h5", compile=False)
-
 @app.on_event("startup")
 def start_background_tasks():
-    global ml_model
+    
     create_tables()
 
     thread = threading.Thread(target=sensor_collector)
@@ -402,8 +405,6 @@ def start_background_tasks():
 
 # app
 if __name__ == "__main__":
-    # Pull the port from Render's environment, default to 8000 for local testing
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
 
 
