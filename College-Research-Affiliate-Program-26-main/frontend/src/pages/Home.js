@@ -24,7 +24,8 @@ const CHART_COLORS = [
   '#8884d8',
   '#82ca9d'
 ];
-
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 // Add a prediction distribution chart
 const PredictionDistributionChart = () => {
 
@@ -204,8 +205,8 @@ const Home = () => {
       setLoading(true);
       // Add tank_id parameter if a node is selected
       // Map the selected node to actual tank_id used in sensor data
-      const actualTankId = selectedNode ? getActualTankId(selectedNode) : null;
-      const timeParams = getTimeRangeParams();
+     // const actualTankId = selectedNode ? getActualTankId(selectedNode) : null;
+      //const timeParams = getTimeRangeParams();
 
       let url = config.SENSOR_DATA_URL;
 
@@ -282,8 +283,7 @@ const Home = () => {
         // No data found for selected node
         setHasDataForNode(false);
         if (selectedNode) {
-          const actualTankId = getActualTankId(selectedNode);
-          setNodeDataMessage(`No sensor data found for ${selectedNode} (checking tank_id: ${actualTankId})`);
+          setNodeDataMessage(`No sensor data found for ${selectedNode}`);
         } else {
           setNodeDataMessage('No sensor data available');
         }
