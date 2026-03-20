@@ -389,7 +389,7 @@ async def get_predictions_history(limit: int = 100):
 # START BACKGROUND COLLECTOR
 # ==============================
 
-ml_model = load_model("saved_models/best_model.h5", compile=False)
+ml_model = load_model("saved_models/LSTM_model.h5", compile=False)
 
 @app.on_event("startup")
 def start_background_tasks():
