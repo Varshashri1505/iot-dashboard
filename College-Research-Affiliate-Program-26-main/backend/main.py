@@ -1,6 +1,4 @@
 import os
-from tensorflow.keras.models import load_model
-import os
 from dotenv import load_dotenv
 import requests
 import psycopg2
@@ -391,7 +389,7 @@ async def get_predictions_history(limit: int = 100):
 # START BACKGROUND COLLECTOR
 # ==============================
 
-ml_model = load_model("saved_models/fixed_model.h5", compile=False)
+ml_model = load_model("saved_models/best_model.h5", compile=False)
 
 @app.on_event("startup")
 def start_background_tasks():
