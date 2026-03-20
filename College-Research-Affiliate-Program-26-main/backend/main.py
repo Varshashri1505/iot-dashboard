@@ -1,24 +1,5 @@
 import os
 from tensorflow.keras.models import load_model
-
-# 1. Hide the hardware message and fix the Keras version
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-os.environ["TF_USE_LEGACY_KERAS"] = "1"
-
-# 2. Find the absolute path to your model
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# Change 'ml_models' to 'backend' if that's the one you want
-MODEL_PATH = os.path.join(BASE_DIR, "ml_models", "fixed_model.h5")
-
-# 3. Load with a check to prevent crashing
-if os.path.exists(MODEL_PATH):
-    model = load_model(MODEL_PATH)
-    print(f"✅ Model loaded successfully from {MODEL_PATH}")
-else:
-    print(f"❌ ERROR: Model not found at {MODEL_PATH}")
-    # This print will show up in your Render logs so you can see the real path
-
-
 import os
 from dotenv import load_dotenv
 import requests
@@ -56,8 +37,18 @@ app.add_middleware(
 # ==============================
 
 def get_connection():
-    return psycopg2.connect(os.environ["DATABASE_URL"])
-
+    """
+    Get database connection using environment variables.
+    Falls back to local development settings if env vars not set.
+    """
+    return psycopg2.connect(
+        host=os.environ.get("DB_HOST", "localhost"),
+        port=os.environ.get("DB_PORT", "5432"),
+        database=os.environ.get("DB_NAME", "iot-test"),
+        user=os.environ.get("DB_USER", "postgres"),
+        password=os.environ.get("DB_PASSWORD", "postgres"),
+        sslmode=os.environ.get("DB_SSLMODE", "prefer")  # Use "require" for Aiven
+    )
 
 # ==============================
 # CREATE TABLES
